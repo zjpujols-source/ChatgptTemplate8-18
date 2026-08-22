@@ -55,11 +55,17 @@ export const MusicTab: React.FC<MusicTabProps> = ({
                   }`}
                   title={release.title}
                 >
-                  <img
-                    src={release.coverArt}
-                    alt={release.title}
-                    className="w-full h-full object-cover"
-                  />
+                  {release.coverArt ? (
+                    <img
+                      src={release.coverArt}
+                      alt={release.title}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-zinc-800 flex items-center justify-center text-[10px] text-zinc-500 font-mono">
+                      MUSIC
+                    </div>
+                  )}
                 </button>
               );
             })}
@@ -72,11 +78,17 @@ export const MusicTab: React.FC<MusicTabProps> = ({
               className="relative aspect-square w-full max-w-[320px] sm:max-w-[440px] bg-zinc-900 border border-white/20 shadow-2xl cursor-pointer group overflow-hidden"
               title={`Stream / Download ${activeItem.title}`}
             >
-              <img
-                src={activeItem.coverArt}
-                alt={activeItem.title}
-                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-              />
+              {activeItem.coverArt ? (
+                <img
+                  src={activeItem.coverArt}
+                  alt={activeItem.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              ) : (
+                <div className="w-full h-full bg-zinc-900 flex items-center justify-center text-xs text-zinc-500 font-mono">
+                  SINGLE / ALBUM COVER
+                </div>
+              )}
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                 <span className="text-xs uppercase tracking-[0.25em] font-bold bg-white text-black px-6 py-3 shadow-2xl">
                   Stream Track

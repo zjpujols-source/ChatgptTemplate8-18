@@ -92,19 +92,9 @@ export const TemplateCustomizer: React.FC<TemplateCustomizerProps> = ({
     reader.readAsDataURL(file);
   };
 
-  const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const dataUrl = event.target?.result as string;
-      onUpdateConfig({ ...config, heroVideoUrl: dataUrl });
-    };
-    reader.readAsDataURL(file);
-  };
-
   const handleCopyConfig = () => {
-    const codeString = `// Paste this into src/config/artistConfig.ts\n\nimport { ArtistConfig } from '../types/artist';\n\nexport const defaultArtistConfig: ArtistConfig = ${JSON.stringify(config, null, 2)};`;
+    const exportConfig = { ...config, heroVideoUrl: "/hero-video.mp4" };
+    const codeString = `// Paste this into src/config/artistConfig.ts\n\nimport { ArtistConfig } from '../types/artist';\n\nexport const defaultArtistConfig: ArtistConfig = ${JSON.stringify(exportConfig, null, 2)};`;
     navigator.clipboard.writeText(codeString);
     setCopiedCode(true);
     setTimeout(() => setCopiedCode(false), 3000);
@@ -342,38 +332,14 @@ export const TemplateCustomizer: React.FC<TemplateCustomizerProps> = ({
                   <span>4. Hero Video Background & Photos</span>
                 </h4>
                 
-                {/* Hero Looping Video Input */}
-                <div className="space-y-2">
-                  <label className="block text-xs font-mono text-neutral-400 uppercase">
-                    Hero Looping Background Video URL or MP4/WebM File
-                  </label>
-                  <div className="flex gap-2">
-                    <input
-                      type="text"
-                      value={config.heroVideoUrl || ''}
-                      onChange={(e) => handleTextChange('heroVideoUrl', e.target.value)}
-                      placeholder="/hero-bg.mp4 or https://..."
-                      className="flex-1 bg-neutral-950 border border-neutral-800 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 font-mono"
-                    />
-                    <label className="px-3 py-2 rounded-xl bg-neutral-800 hover:bg-neutral-700 text-neutral-200 text-xs font-medium cursor-pointer flex items-center gap-1 shrink-0">
-                      <Upload className="w-3.5 h-3.5" />
-                      <span>Upload Video</span>
-                      <input type="file" accept="video/mp4,video/webm,video/*" className="hidden" onChange={handleVideoUpload} />
-                    </label>
+                {/* Hero Looping Video Info */}
+                <div className="p-3.5 rounded-2xl bg-neutral-950 border border-neutral-800 space-y-1">
+                  <div className="text-xs font-mono text-purple-400 uppercase font-bold">
+                    Hero Video Background (Standardized)
                   </div>
-                  {config.heroVideoUrl && (
-                    <div className="h-24 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950 relative">
-                      <video
-                        src={config.heroVideoUrl}
-                        autoPlay
-                        loop
-                        muted
-                        playsInline
-                        className="w-full h-full object-cover"
-                      />
-                      <span className="absolute bottom-1 right-2 text-[10px] bg-black/80 px-1.5 py-0.5 rounded font-mono text-neutral-400">Looping Video Preview</span>
-                    </div>
-                  )}
+                  <p className="text-xs text-neutral-400">
+                    The hero background video path is permanently set to <code className="text-white bg-neutral-900 px-1.5 py-0.5 rounded font-mono">/hero-video.mp4</code>. Simply upload or save your video as <code className="text-white bg-neutral-900 px-1.5 py-0.5 rounded font-mono">public/hero-video.mp4</code>.
+                  </p>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2">
@@ -397,10 +363,12 @@ export const TemplateCustomizer: React.FC<TemplateCustomizerProps> = ({
                         <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, 'hero')} />
                       </label>
                     </div>
-                    <div className="h-20 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950 relative">
-                      <img src={config.heroImage} alt="Hero preview" className="w-full h-full object-cover" />
-                      <span className="absolute bottom-1 right-2 text-[10px] bg-black/80 px-1.5 py-0.5 rounded font-mono text-neutral-400">Poster Preview</span>
-                    </div>
+                    {config.heroImage ? (
+                      <div className="h-20 rounded-xl overflow-hidden border border-neutral-800 bg-neutral-950 relative">
+                        <img src={config.heroImage} alt="Hero preview" className="w-full h-full object-cover" />
+                        <span className="absolute bottom-1 right-2 text-[10px] bg-black/80 px-1.5 py-0.5 rounded font-mono text-neutral-400">Poster Preview</span>
+                      </div>
+                    ) : null}
                   </div>
 
                   {/* Profile Avatar Image */}
@@ -422,9 +390,11 @@ export const TemplateCustomizer: React.FC<TemplateCustomizerProps> = ({
                         <input type="file" accept="image/*" className="hidden" onChange={(e) => handleImageUpload(e, 'profile')} />
                       </label>
                     </div>
-                    <div className="h-20 w-20 rounded-full overflow-hidden border-2 border-purple-500 bg-neutral-950 relative">
-                      <img src={config.profileImage} alt="Profile preview" className="w-full h-full object-cover" />
-                    </div>
+                    {config.profileImage ? (
+                      <div className="h-20 w-20 rounded-full overflow-hidden border-2 border-purple-500 bg-neutral-950 relative">
+                        <img src={config.profileImage} alt="Profile preview" className="w-full h-full object-cover" />
+                      </div>
+                    ) : null}
                   </div>
 
                 </div>

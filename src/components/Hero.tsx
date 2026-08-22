@@ -56,32 +56,24 @@ export const Hero: React.FC<HeroProps> = ({ config }) => {
       window.removeEventListener('touchstart', handleInteraction, { capture: true });
       window.removeEventListener('pointerdown', handleInteraction, { capture: true });
     };
-  }, [config.heroVideoUrl]);
+  }, []);
 
   return (
     <section className="relative w-full h-[50vh] min-h-[320px] sm:h-[85vh] lg:h-[92vh] overflow-hidden bg-black flex items-center justify-center border-b border-white/10">
       {/* Video Loop Background */}
       <div className="absolute inset-0 z-0 overflow-hidden flex items-center justify-center">
-        {config.heroVideoUrl ? (
-          <video
-            key={config.heroVideoUrl}
-            ref={videoRef}
-            src={config.heroVideoUrl}
-            autoPlay
-            loop
-            muted
-            playsInline
-            disablePictureInPicture
-            preload="auto"
-            className="w-full h-full object-cover object-center opacity-90 transition-opacity duration-500 pointer-events-none"
-          />
-        ) : (
-          <img
-            src={config.heroImage}
-            alt={config.artistName}
-            className="w-full h-full object-cover object-center opacity-80"
-          />
-        )}
+        <video
+          ref={videoRef}
+          src="/hero-video.mp4"
+          poster="/hero-poster.jpg"
+          autoPlay
+          loop
+          muted
+          playsInline
+          disablePictureInPicture
+          preload="metadata"
+          className="w-full h-full object-cover object-center opacity-90 transition-opacity duration-500 pointer-events-none"
+        />
         {/* Subtle Overlay gradient for contrast */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-black/40 pointer-events-none" />
       </div>

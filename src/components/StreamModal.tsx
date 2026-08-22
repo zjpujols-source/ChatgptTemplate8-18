@@ -151,11 +151,17 @@ export const StreamModal: React.FC<StreamModalProps> = ({
       <div className="relative z-10 w-full max-w-md bg-zinc-950 border border-white/20 rounded-2xl shadow-2xl overflow-hidden text-white flex flex-col my-auto max-h-[90vh]">
         {/* Header with Background Blur Cover */}
         <div className="relative p-6 border-b border-white/10 flex items-center gap-4 bg-gradient-to-b from-zinc-900 to-zinc-950">
-          <img
-            src={release.coverArt}
-            alt={release.title}
-            className="w-20 h-20 rounded-lg object-cover border border-white/20 shadow-lg shrink-0"
-          />
+          {release.coverArt ? (
+            <img
+              src={release.coverArt}
+              alt={release.title}
+              className="w-20 h-20 rounded-lg object-cover border border-white/20 shadow-lg shrink-0"
+            />
+          ) : (
+            <div className="w-20 h-20 rounded-lg bg-zinc-800 border border-white/20 shadow-lg shrink-0 flex items-center justify-center text-[10px] text-zinc-500 font-mono">
+              COVER
+            </div>
+          )}
           <div className="flex-1 min-w-0">
             <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-purple-400 block mb-1">
               {release.type}

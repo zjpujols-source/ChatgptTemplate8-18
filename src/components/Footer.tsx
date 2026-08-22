@@ -14,8 +14,8 @@ export const Footer: React.FC<FooterProps> = ({ config }) => {
     <footer className="bg-black text-white py-16 border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col items-center justify-center space-y-8">
         
-        {/* Social Icons Row matching user's exact HTML & styling */}
-        <div className="flex items-center gap-[14px] p-5">
+        {/* Social Icons Row */}
+        <div className="flex items-center gap-[14px] p-5 flex-wrap justify-center">
           {config.socials.map((soc) => (
             <a
               key={soc.id}
@@ -59,8 +59,11 @@ export const Footer: React.FC<FooterProps> = ({ config }) => {
             </a>
           ))}
         </div>
+
+        <div className="text-center text-xs text-zinc-500 font-mono">
+          © {new Date().getFullYear()} {config.artistName}. All rights reserved.
+        </div>
       </div>
     </footer>
   );
 };
-

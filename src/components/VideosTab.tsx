@@ -18,7 +18,7 @@ export const VideosTab: React.FC<VideosTabProps> = ({ config }) => {
 
   const youtubeSocial = config.socials.find(s => s.platform === 'youtube');
   const youtubeUrl = youtubeSocial?.url || `https://www.youtube.com/watch?v=${activeVideo.youtubeId}`;
-  const videoThumbnail = activeVideo.thumbnail || `https://i.ytimg.com/vi/${activeVideo.youtubeId}/hqdefault.jpg`;
+  const videoThumbnail = activeVideo.thumbnail || (activeVideo.youtubeId ? `https://i.ytimg.com/vi/${activeVideo.youtubeId}/hqdefault.jpg` : "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80");
 
   const handleSelectVideo = (idx: number) => {
     setSelectedIndex(idx);
@@ -106,7 +106,7 @@ export const VideosTab: React.FC<VideosTabProps> = ({ config }) => {
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-2">
                 {otherVideos.map((video) => {
                   const actualIdx = allVideos.findIndex(v => v.id === video.id);
-                  const thumb = video.thumbnail || `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg`;
+                  const thumb = video.thumbnail || (video.youtubeId ? `https://i.ytimg.com/vi/${video.youtubeId}/hqdefault.jpg` : "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80");
                   return (
                     <div
                       key={video.id}

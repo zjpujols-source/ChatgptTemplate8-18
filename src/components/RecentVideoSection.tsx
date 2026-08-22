@@ -13,7 +13,7 @@ export const RecentVideoSection: React.FC<RecentVideoSectionProps> = ({ config }
 
   const youtubeSocial = config.socials.find(s => s.platform === 'youtube');
   const youtubeUrl = youtubeSocial?.url || `https://www.youtube.com/watch?v=${latestVideo.youtubeId}`;
-  const videoThumbnail = latestVideo.thumbnail || `https://i.ytimg.com/vi/${latestVideo.youtubeId}/hqdefault.jpg`;
+  const videoThumbnail = latestVideo.thumbnail || (latestVideo.youtubeId ? `https://i.ytimg.com/vi/${latestVideo.youtubeId}/hqdefault.jpg` : "https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=800&q=80");
 
   return (
     <div className="py-16 sm:py-24 border-t border-white/10 bg-black text-white">
