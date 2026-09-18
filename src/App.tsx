@@ -10,12 +10,10 @@ import { ShopTab } from './components/ShopTab';
 import { ContactTab } from './components/ContactTab';
 import { RecentVideoSection } from './components/RecentVideoSection';
 import { Footer } from './components/Footer';
-import { TemplateCustomizer } from './components/TemplateCustomizer';
 
 export const App: React.FC = () => {
-  const [config, setConfig] = useState<ArtistConfig>(defaultArtistConfig);
+  const [config] = useState<ArtistConfig>(defaultArtistConfig);
   const [activeTab, setActiveTab] = useState<TabType>('music');
-  const [isCustomizerOpen, setIsCustomizerOpen] = useState<boolean>(false);
 
   const handlePlayTrack = (title: string, artist: string, coverArt?: string) => {
     // Optional track playback handler
@@ -39,6 +37,7 @@ export const App: React.FC = () => {
             <RecentVideoSection config={config} />
           </>
         )}
+
         {activeTab === 'videos' && <VideosTab config={config} />}
         {activeTab === 'live' && <LiveTab config={config} />}
         {activeTab === 'shop' && <ShopTab config={config} />}
@@ -49,15 +48,6 @@ export const App: React.FC = () => {
       <Footer
         config={config}
         onSelectTab={setActiveTab}
-      />
-
-      {/* Template Customizer Modal (Internal state ready if opened via dev triggers) */}
-      <TemplateCustomizer
-        config={config}
-        onUpdateConfig={setConfig}
-        onReset={() => setConfig(defaultArtistConfig)}
-        isOpen={isCustomizerOpen}
-        onClose={() => setIsCustomizerOpen(false)}
       />
     </div>
   );
