@@ -1,28 +1,46 @@
 import React, { useState } from 'react';
 import { ArtistConfig, TabType } from '../types/artist';
-import { Sliders, Menu, X } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 interface NavbarProps {
   config: ArtistConfig;
   activeTab: TabType;
   onSelectTab: (tab: TabType) => void;
-  onOpenCustomizer?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
   config,
   activeTab,
-  onSelectTab,
-  onOpenCustomizer
+  onSelectTab
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const tabs: { key: TabType; label: string; enabled: boolean }[] = [
-    { key: 'music', label: config.tabs.music.title || 'MUSIC', enabled: config.tabs.music.enabled },
-    { key: 'videos', label: config.tabs.videos.title || 'VIDEOS', enabled: config.tabs.videos.enabled },
-    { key: 'live', label: config.tabs.live.title || 'LIVE', enabled: config.tabs.live.enabled },
-    { key: 'shop', label: config.tabs.shop.title || 'STORE', enabled: config.tabs.shop.enabled },
-    { key: 'contact', label: config.tabs.contact.title || 'CONTACT', enabled: config.tabs.contact.enabled },
+    {
+      key: 'music',
+      label: config.tabs.music.title || 'MUSIC',
+      enabled: config.tabs.music.enabled
+    },
+    {
+      key: 'videos',
+      label: config.tabs.videos.title || 'VIDEOS',
+      enabled: config.tabs.videos.enabled
+    },
+    {
+      key: 'live',
+      label: config.tabs.live.title || 'LIVE',
+      enabled: config.tabs.live.enabled
+    },
+    {
+      key: 'shop',
+      label: config.tabs.shop.title || 'STORE',
+      enabled: config.tabs.shop.enabled
+    },
+    {
+      key: 'contact',
+      label: config.tabs.contact.title || 'CONTACT',
+      enabled: config.tabs.contact.enabled
+    },
   ];
 
   const handleTabClick = (key: TabType) => {
@@ -33,6 +51,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-md border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between">
+
         {/* Brand / Artist Name */}
         <button
           onClick={() => handleTabClick('music')}
@@ -45,6 +64,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="hidden md:flex items-center gap-1 sm:gap-6 py-2">
           {tabs.filter(t => t.enabled).map((tab) => {
             const isActive = activeTab === tab.key;
+
             return (
               <button
                 key={tab.key}
@@ -56,6 +76,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 {tab.label}
+
                 {isActive && (
                   <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-white shadow-lg" />
                 )}
@@ -64,19 +85,8 @@ export const Navbar: React.FC<NavbarProps> = ({
           })}
         </div>
 
-        {/* Right Action Area (Mobile Hamburger & Customizer) */}
+        {/* Right Action Area */}
         <div className="flex items-center gap-2">
-          {/* Customizer Button (if available) */}
-          {onOpenCustomizer && (
-            <button
-              onClick={onOpenCustomizer}
-              className="p-2 sm:px-3 sm:py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-white/10 text-xs font-mono flex items-center gap-2 transition-colors shrink-0"
-              title="Customizer / Settings"
-            >
-              <Sliders className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Customize</span>
-            </button>
-          )}
 
           {/* Mobile Hamburger Button */}
           <button
@@ -90,6 +100,7 @@ export const Navbar: React.FC<NavbarProps> = ({
               <Menu className="w-5 h-5" />
             )}
           </button>
+
         </div>
       </div>
 
@@ -98,6 +109,7 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="md:hidden bg-black/95 backdrop-blur-xl border-b border-white/10 px-4 py-4 space-y-1 animate-in fade-in slide-in-from-top-2 duration-200 shadow-2xl">
           {tabs.filter(t => t.enabled).map((tab) => {
             const isActive = activeTab === tab.key;
+
             return (
               <button
                 key={tab.key}
@@ -109,6 +121,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 }`}
               >
                 <span>{tab.label}</span>
+
                 {isActive && (
                   <span className="w-2 h-2 rounded-full bg-white shadow-sm" />
                 )}
